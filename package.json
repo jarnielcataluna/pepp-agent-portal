@@ -28,6 +28,7 @@
     "@auth0/angular-jwt": "^2.0.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
+    "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.3",
     "json-typescript-mapper": "^1.1.3",
