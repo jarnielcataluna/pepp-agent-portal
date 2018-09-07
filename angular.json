@@ -26,7 +26,11 @@
               "src/styles.css",
               "src/theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "postinstall": "ng build --aot --prod"
+              }
+            ]
           },
           "configurations": {
             "production": {
