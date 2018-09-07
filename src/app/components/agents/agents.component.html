@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>PEPP Portal</span>
+    <span class="example-fill-remaining-space"></span>
+    <span>
+
+      <mat-menu #appMenu="matMenu">
+        <ng-template matMenuContent let-name="name">
+          <button mat-menu-item [routerLink]="['/']">Reports</button>
+          <button mat-menu-item (click)="logOff()">Log out</button>
+        </ng-template>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="wrapper">
+  <h2 color="primary" id="title">Agents</h2>
+  <mat-card mat-elevation-z8>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let agent of agents">
+        <mat-icon matListIcon *ngIf="agent.enabled" [color]="'primary'">beenhere</mat-icon>
+        <mat-icon matListIcon *ngIf="!agent.enabled">phonelink_lock</mat-icon>
+        <a matLine>{{ agent.username | decrypt }}</a>
+        <button mat-icon-button (click)="deactivate(agent.username)" *ngIf="agent.enabled">
+          <mat-icon [color]="'warn'">phonelink_lock</mat-icon>
+        </button>
+        <button mat-icon-button (click)="activate(agent.username)" *ngIf="!agent.enabled">
+          <mat-icon [color]="'primary'">beenhere</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card>
+</div>

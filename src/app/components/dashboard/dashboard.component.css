@@ -1,0 +1,86 @@
+::ng-deep .mat-ink-bar {
+    background-color: var(--primary-color,yellow) !important;
+    }
+
+.example-fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+#peppTab nav a {
+    color: white;
+}
+
+.mat-toolbar {
+    color: white;
+}
+
+.table-container {
+    clear: both;
+    display: flex;
+    flex-direction: column;
+    margin: 2vw;
+}
+
+table {
+    width: 100%;
+}
+
+.card-container-right{
+    float: right;
+    padding-top: 16px;
+    padding-right: 2vw;
+}
+
+.card-container-right mat-form-field {
+    margin-left: 16px;
+}
+
+
+.card-container-left{
+    float: left;
+    padding-top: 16px;
+    padding-left: 2vw;
+}
+
+#card-table {
+    clear: both;
+    padding-top: 0;
+}
+
+tr.mat-footer-row {
+    font-weight: bold;
+  }
+  
+  .mat-table-sticky {
+    border-top: 1px solid #e0e0e0;
+  }
+
+
+  @media(max-width: 600px) {
+
+    .card-container-right {
+        padding: 0;
+        margin: 2px;
+    }
+
+    mat-form-field {
+        width: 100%;
+        margin: 0;
+    }
+
+    #title {
+        display: none;
+    }
+  
+    .mat-header-row {
+      display: none;
+    }
+  
+    .mat-row { 
+      flex-direction: column;
+      align-items: start;
+      padding: 8px 24px;
+    }
+  }

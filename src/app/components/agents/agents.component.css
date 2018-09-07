@@ -1,0 +1,11 @@
+.example-fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar {
+    color: white;
+}
+
+.wrapper {
+    margin: 2vw;
+}

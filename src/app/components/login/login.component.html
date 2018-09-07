@@ -1,0 +1,22 @@
+<div id="login-wrapper">
+  <div></div>
+  <mat-card class="login-container">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput #username>
+      <mat-icon matSuffix>face</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput #password>
+      <mat-icon matSuffix>lock_open</mat-icon>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="loginUser()">Login</button>
+
+  </mat-card>
+  <div></div>
+
+</div>
