@@ -22,8 +22,14 @@ export class AgentsComponent implements OnInit {
   ) { }
 
   agents;
+  fetchingData;
 
   ngOnInit() {
+    this.getAgents();
+  }
+
+  getAgents() {
+    this.fetchingData = true;
     this.apiService.getAgents()
       .then((data) => {
         console.log(data);
@@ -31,6 +37,8 @@ export class AgentsComponent implements OnInit {
       })
       .catch((error) => {
         this.openSnackBar(error.error.error_message);
+      }).then(() => {
+        this.fetchingData = false;
       });
   }
 
@@ -57,13 +65,7 @@ export class AgentsComponent implements OnInit {
         this.openSnackBar(message);
       }
     ).then(() => {
-      this.apiService.getAgents()
-        .then((agents) => {
-          this.agents = agents;
-        })
-        .catch((error) => {
-          this.openSnackBar(error.error.error_message);
-        });
+      this.getAgents();
     });
   }
 
@@ -84,13 +86,7 @@ export class AgentsComponent implements OnInit {
         this.openSnackBar(message);
       }
     ).then(() => {
-      this.apiService.getAgents()
-        .then((agents) => {
-          this.agents = agents;
-        })
-        .catch((error) => {
-          this.openSnackBar(error.error.error_message);
-        });
+      this.getAgents();
     });
   }
 

@@ -67,6 +67,7 @@
 </div>
 
 <div class="mat-elevation-z8 table-container">
+  <mat-progress-bar *ngIf="fetchingData" mode="indeterminate"></mat-progress-bar>
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="transactionDate">
       <th mat-header-cell *matHeaderCellDef> Date </th>

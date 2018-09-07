@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { LayoutModule } from '@angular/cdk/layout';
 // tslint:disable-next-line:max-line-length
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatTab, MatTabsModule, MatDatepickerModule, MatNativeDateModule, MatFormField, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSnackBarModule, MatExpansionModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatTab, MatTabsModule, MatDatepickerModule, MatNativeDateModule, MatFormField, MatFormFieldModule, MatInputModule, MatAutocompleteModule, MatSnackBarModule, MatExpansionModule, MatProgressBar, MatProgressBarModule } from '@angular/material';
 import { ReactiveFormsModule } from '../../node_modules/@angular/forms';
 import { DecryptPipe } from 'src/app/pipes/decrypt.pipe';
 import { AgentsComponent } from './components/agents/agents.component';
@@ -54,7 +54,8 @@ const appRoutes: Routes = [
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

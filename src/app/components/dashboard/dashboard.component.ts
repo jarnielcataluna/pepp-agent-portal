@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
   transactionData: any[];
   usernames;
   selectedType;
+  fetchingData;
 
   title;
 
@@ -141,6 +142,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getTransactions() {
+    this.fetchingData = true;
+    this.dataSource = undefined;
     this.apiService.getTransactions(this.request)
       .then((data) => {
         this.transactionData = data['content'];
@@ -151,6 +154,8 @@ export class DashboardComponent implements OnInit {
       .catch((error) => {
         this.openSnackBar(error.error.error_message);
         this.resetRequest();
+      }).then(() => {
+        this.fetchingData = false;
       });
   }
 

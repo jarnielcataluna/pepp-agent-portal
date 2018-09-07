@@ -21,6 +21,7 @@
 <div class="wrapper">
   <h2 color="primary" id="title">Agents</h2>
   <mat-card mat-elevation-z8>
+    <mat-progress-bar *ngIf="fetchingData" mode="indeterminate"></mat-progress-bar>
     <mat-nav-list>
       <mat-list-item *ngFor="let agent of agents">
         <mat-icon matListIcon *ngIf="agent.enabled" [color]="'primary'">beenhere</mat-icon>
