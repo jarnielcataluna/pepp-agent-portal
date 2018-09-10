@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
   getReleasedTransactions() {
     this.title = 'Acknowledgement';
     this.columnsToDisplay = [
-      'transactionDate', 'userName', 'transactionCode', 'receiver', 'principal', 'commission', 'serviceCharge', 'total'
+      'transactionDate', 'userName', 'transactionCode', 'receiver', 'principal', 'total'
     ];
     this.request.type = 2;
     this.getTransactions();
@@ -144,6 +144,7 @@ export class DashboardComponent implements OnInit {
   getTransactions() {
     this.fetchingData = true;
     this.dataSource = undefined;
+    this.transactionData = undefined;
     this.apiService.getTransactions(this.request)
       .then((data) => {
         this.transactionData = data['content'];
@@ -203,7 +204,7 @@ export class DashboardComponent implements OnInit {
 
   openSnackBar(message: string) {
     this.snackBar.open(message, null, {
-      duration: 2000,
+      duration: 3000,
     });
   }
 
