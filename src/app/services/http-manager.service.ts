@@ -4,7 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { serialize } from 'json-typescript-mapper';
 
 
-const API_URL = 'http://pps-agent-rest-engine-stage.ap-southeast-1.elasticbeanstalk.com/';
+const API_URL = 'http://pps-agent-rest-engine-prod.ap-southeast-1.elasticbeanstalk.com/';
 const API_CLIENT_ID = 'ppep_agent_core';
 const API_CLIENT_SECRET = 'c1On0vGm4jebEtM8wPpDFFTv8DCDAfHsC39FaHPKA4U=';
 const API_GENERIC_USERNAME = 'pepp_agent_app';
