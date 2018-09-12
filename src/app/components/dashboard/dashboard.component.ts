@@ -1,11 +1,15 @@
-import { Component, OnInit, ViewChild, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ViewEncapsulation, ElementRef } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import { MatPaginator, MatTableDataSource, MatDatepickerInputEvent, MatSnackBar, MatAutocompleteSelectedEvent, MatInput, MatDialog } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDatepickerInputEvent, MatSnackBar, MatAutocompleteSelectedEvent, MatInput, MatDialog, MatTable } from '@angular/material';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
 import { TransactionRequestModel } from '../model/transaction-request.model';
 import { HttpManagerService } from '../../services/http-manager.service';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 export class Transaction {
   date: number;
@@ -41,13 +45,23 @@ export class DashboardComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   transactionData: any[];
-  usernames;
+  agents;
+  usernames = [];
   selectedType;
   fetchingData;
 
+  exportData: {}[] = [];
+
+  types = ['SEND', 'RECEIVE', 'TOPUP', 'ENCASH'];
+
   title;
 
+  filteredOptions: Observable<string[]>;
+
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @ViewChild('transactionWrapper') table: ElementRef;
 
   @ViewChild('endInput', {
     read: MatInput
@@ -61,12 +75,18 @@ export class DashboardComponent implements OnInit {
     read: MatInput
   }) agentInput: MatInput;
 
+  agentFormControl = new FormControl();
 
   ngOnInit() {
     this.request = new TransactionRequestModel();
     this.dataSource.paginator = this.paginator;
     this.getRemittanceTransactions();
     this.getUser();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.usernames.filter(option => option.toLowerCase().includes(filterValue));
   }
 
 
@@ -180,10 +200,21 @@ export class DashboardComponent implements OnInit {
     this.apiService.getAgents()
       .then((data) => {
         console.log(data);
-        this.usernames = data;
+        this.agents = data;
       })
       .catch((error) => {
         this.openSnackBar(error.error.error_message);
+      }).then(() => {
+
+        for (const d of this.agents) {
+          this.usernames.push(this.utils.decrypt(d['username']));
+        }
+
+        this.filteredOptions = this.agentFormControl.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
       });
   }
 
@@ -210,7 +241,20 @@ export class DashboardComponent implements OnInit {
 
 
   agentChanged(event) {
-    console.log(event);
+
+    if (this.usernames.includes(event.target.value)) {
+      this.request.agent = this.utils.encrypt(event.target.value);
+      this.getTransactions();
+    } else {
+      if (event.target.value === '') {
+        this.request.agent = null;
+        this.getTransactions();
+      } else {
+        this.agentInput.value = '';
+      }
+
+      this._filter(this.agentInput.value);
+    }
   }
 
   agentSelected(event: MatAutocompleteSelectedEvent) {
@@ -223,8 +267,42 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  openDeactivateDialog() {
+  exportAsExcel() {
 
+    for (const transaction of this.transactionData) {
+      const temp = {};
+      console.log(transaction);
+      const date = new Date(transaction['timestamp']);
+      temp['DATE'] = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getUTCFullYear();
+      temp['TIME'] = (date.getHours()) + ':' + date.getMinutes() + ':' + date.getSeconds();
+      temp['USERNAME'] = this.utils.decrypt(transaction['agent_username']);
+      temp['TRANX CODE'] = this.utils.decrypt(transaction['transaction_code']);
+
+      const sender = transaction['sender_name'];
+      if (sender != null) {
+        const s = this.utils.decrypt(sender['first_name']) + ' ' + this.utils.decrypt(sender['last_name']);
+        temp['SENDER'] = s.toUpperCase();
+      }
+      const receiver = transaction['receiver_name'];
+      if (sender != null) {
+        const r = this.utils.decrypt(receiver['first_name']) + ' ' + this.utils.decrypt(receiver['last_name']);
+        temp['RECEIVER'] = r.toUpperCase();
+      }
+
+      temp['PRINCIPAL'] = transaction['amount_principal'];
+      temp['COMMISSION'] = transaction['commission'];
+      temp['SERVICE CHARGE'] = transaction['service_charge'];
+      temp['TOTAL'] = transaction['total'];
+
+      this.exportData.push(temp);
+    }
+
+    const now = new Date();
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.exportData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, this.types[this.request.type - 1]);
+    /* save to file */
+    XLSX.writeFile(wb, 'PEPP-' + this.types[this.request.type - 1] + '-REPORT-' + now.getTime() + '.xlsx');
   }
 }
 

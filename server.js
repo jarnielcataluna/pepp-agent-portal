@@ -2,6 +2,7 @@
 const express = require('express');
 const path = require('path');
 var cors = require('cors')
+var xlsx = require('xlsx')
 
 
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.static('./dist/pepp-portal'));
 
 app.use(cors())
+app.use(xlsx())
 
 app.get('/*', function (req, res) {
 

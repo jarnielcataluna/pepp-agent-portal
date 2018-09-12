@@ -7,6 +7,7 @@
       <mat-menu #appMenu="matMenu">
         <ng-template matMenuContent let-name="name">
           <button (click)="resetRequest()" mat-menu-item>Reset Filter</button>
+          <button (click)="exportAsExcel()" mat-menu-item>Export</button>
           <button mat-menu-item [routerLink]="['/agents']">Agents</button>
           <button (click)="logOff()" mat-menu-item>Log out</button>
         </ng-template>
@@ -39,11 +40,11 @@
 <div class="card-container-right">
   <mat-form-field appearance="outline">
     <mat-label>Agent</mat-label>
-    <input #agentInput type="text" matInput [matAutocomplete]="auto" placeholder="Agent" (change)="agentChanged($event)">
+    <input #agentInput type="text" matInput [formControl]="agentFormControl" [matAutocomplete]="auto" placeholder="Agent" (change)="agentChanged($event)">
     <mat-icon matSuffix>people</mat-icon>
   </mat-form-field>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="agentSelected($event)">
-    <mat-option *ngFor="let username of usernames " [value]="username['username'] | decrypt">{{ username['username'] | decrypt }}</mat-option>
+    <mat-option *ngFor="let username of filteredOptions | async " [value]="username">{{ username }}</mat-option>
   </mat-autocomplete>
 
   <mat-form-field appearance="outline">
@@ -66,11 +67,11 @@
   <h2 color="primary" id="title">{{ title }}</h2>
 </div>
 
-<div class="mat-elevation-z8 table-container">
+<div class="mat-elevation-z8 table-container" #transactionWrapper>
 
   <mat-progress-bar *ngIf="fetchingData" mode="indeterminate"></mat-progress-bar>
 
-  <mat-table [dataSource]="dataSource">
+  <table mat-table #transactionTable [dataSource]="dataSource">
 
     <ng-container matColumnDef="transactionDate">
       <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
@@ -189,7 +190,7 @@
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
     <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
     <mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></mat-footer-row>
-  </mat-table>
+  </table>
 
   <mat-paginator [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>
