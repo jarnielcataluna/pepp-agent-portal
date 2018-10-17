@@ -67,7 +67,7 @@
   <h2 color="primary" id="title">{{ title }}</h2>
 </div>
 
-<div class="mat-elevation-z8 table-container" #transactionWrapper>
+<div class=" table-container" #transactionWrapper>
 
   <mat-progress-bar *ngIf="fetchingData" mode="indeterminate"></mat-progress-bar>
 
@@ -78,7 +78,7 @@
       <mat-cell *matCellDef="let transaction">
         <span class="mobile-label">Date: </span>
         <span class="mobile-spacer"></span>
-        {{transaction.timestamp | date}} </mat-cell>
+        {{transaction.timestamp | date:'medium' }} </mat-cell>
       <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
     </ng-container>
 

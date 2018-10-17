@@ -1,39 +1,35 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>PEPP Portal</span>
-    <span class="example-fill-remaining-space"></span>
-    <span>
+<mat-progress-bar mode="indeterminate" *ngIf="fetchingData"></mat-progress-bar>
+<mat-sidenav-container>
+  <mat-sidenav-content>
 
-      <mat-menu #appMenu="matMenu">
-        <ng-template matMenuContent let-name="name">
-          <button mat-menu-item [routerLink]="['/']">Reports</button>
-          <button mat-menu-item (click)="logOff()">Log out</button>
-        </ng-template>
-      </mat-menu>
+    <div class="loader" *ngIf="fetchingData"></div>
 
-      <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </span>
-  </mat-toolbar-row>
-</mat-toolbar>
+    <app-agents-list *ngIf="!isAgentSelected"></app-agents-list>
+    <app-agents-info *ngIf="isAgentSelected"></app-agents-info>
+  </mat-sidenav-content>
 
-<div class="wrapper">
-  <h2 color="primary" id="title">Agents</h2>
-  <mat-card mat-elevation-z8>
-    <mat-progress-bar *ngIf="fetchingData" mode="indeterminate"></mat-progress-bar>
-    <mat-nav-list>
-      <mat-list-item *ngFor="let agent of agents">
-        <mat-icon matListIcon *ngIf="agent.enabled" [color]="'primary'">beenhere</mat-icon>
-        <mat-icon matListIcon *ngIf="!agent.enabled">phonelink_lock</mat-icon>
-        <a matLine>{{ agent.username | decrypt }}</a>
-        <button mat-icon-button (click)="deactivate(agent.username)" *ngIf="agent.enabled">
-          <mat-icon [color]="'warn'">phonelink_lock</mat-icon>
-        </button>
-        <button mat-icon-button (click)="activate(agent.username)" *ngIf="!agent.enabled">
-          <mat-icon [color]="'primary'">beenhere</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-nav-list>
-  </mat-card>
+  <mat-sidenav mode="side" position="end" [opened]="isDrawerOpen">
+    <app-agent-manage-dialog></app-agent-manage-dialog>
+  </mat-sidenav>
+
+</mat-sidenav-container>
+
+<div class="page-action">
+  <ng-container *ngIf="!isDrawerOpen && !isAgentSelected">
+    <button mat-fab matTooltip="Add Agent" [matTooltipPosition]="'above'" (click)="openDrawer()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="!isDrawerOpen && isAgentSelected">
+    <button mat-fab matTooltip="Add Agent" [matTooltipPosition]="'above'" (click)="closeInfo()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="isDrawerOpen">
+    <button mat-fab matTooltip="Save" [matTooltipPosition]="'above'" (click)="createAgent()">
+      <mat-icon>save</mat-icon>
+    </button>
+  </ng-container>
 </div>

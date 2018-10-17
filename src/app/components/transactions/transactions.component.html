@@ -1,0 +1,25 @@
+<mat-progress-bar mode="indeterminate" *ngIf="fetchingData"></mat-progress-bar>
+<mat-sidenav-container>
+  <mat-sidenav-content>
+
+    <div class="loader" *ngIf="fetchingData"></div>
+    <!-- -->
+    <app-transaction-list (searchToggled)="toggleSearch($event)" [isToggled]="isSearchToggled"></app-transaction-list>
+  </mat-sidenav-content>
+  <mat-sidenav mode="side" position="end" [opened]="isSearchToggled">
+    <app-transaction-filter></app-transaction-filter>
+  </mat-sidenav>
+</mat-sidenav-container>
+<div class="page-action">
+  <ng-container *ngIf="!isSearchToggled">
+    <button mat-fab matTooltip="Download Report" [matTooltipPosition]="'above'" (click)="downloadTransactions()">
+      <mat-icon>cloud_download</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="isSearchToggled">
+    <button mat-fab matTooltip="Close Info" [matTooltipPosition]="'above'" (click)="toggleSearch(false)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </ng-container>
+</div>

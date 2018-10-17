@@ -1,0 +1,66 @@
+<div *ngIf="agentData !== null">
+  <div class="actions">
+    <button mat-icon-button color="primary" (click)="editAction()">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="deleteAction()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+
+
+  <div class="card card-stats">
+    <div class="card-header card-header-primary card-header-icon">
+      <div class="card-icon">
+        <i class="material-icons">info_outline</i>
+      </div>
+      <div class="card-category">{{ agentData.user.username | decrypt }}</div>
+      <div class="card-title">{{ agentData.name | decrypt }}</div>
+    </div>
+    <div class="card-body">
+      <mat-list>
+        <mat-list-item class="info-list">
+          <span class="label">Contact: </span>
+          <span class="spacer"></span>
+          <span class="value">{{ agentData.contact | decrypt }}</span>
+        </mat-list-item>
+        <div class="field">
+          <span class="label">Address:</span>
+          <br>
+          <span>
+            <span class="value">{{ agentData.address | decrypt }} </span>
+          </span>
+        </div>
+        <mat-list-item class="info-list">
+          <span class="label">Agents: </span>
+          <span class="spacer"></span>
+          <span class="value">{{ agentData.agents.length }}</span>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="card-footer">
+      <div class="stats">
+        <i class="material-icons">access_time</i> {{ agentData.updatedDate | date:'medium' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-stats">
+    <div class="card-header card-header-secondary card-header-icon">
+      <div class="card-icon">
+        <i class="material-icons">account_balance</i>
+      </div>
+      <div class="card-category">Total Commission</div>
+      <div class="card-title">{{ agentData.wallet.currentBalance | currency:"&#8369;" }}</div>
+    </div>
+    <div class="card-footer">
+      <div class="stats">
+        <i class="material-icons">access_time</i> {{ agentData.wallet.currentUpdated | date:'medium' }}
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>

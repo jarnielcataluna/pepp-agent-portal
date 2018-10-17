@@ -1,0 +1,40 @@
+<div class="card">
+  <!-- <div class="card-header card-header-secondary card-header-icon">
+    <div class="card-icon">
+      <i class="material-icons">search</i>
+    </div>
+    <div class="card-title">Filter Settings</div>
+  </div> -->
+  <div class="card-header card-header-secondary">
+    Filter Settings
+  </div>
+  <div class="card-body">
+    <div class="filter-form-content">
+      <mat-form-field appearance="outline">
+        <mat-label>Agent</mat-label>
+        <input #agentInput type="text" matInput [formControl]="agentFormControl" [matAutocomplete]="auto" placeholder="Agent" (change)="agentChanged($event)">
+        <mat-icon matSuffix>people</mat-icon>
+      </mat-form-field>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="agentSelected($event)">
+        <mat-option *ngFor="let username of filteredOptions | async " [value]="username">{{ username }}</mat-option>
+      </mat-autocomplete>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input #startInput matInput placeholder="Start Date" [matDatepicker]="startDate" (dateChange)="dateChanged('start', $event)"
+          disabled>
+        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+        <mat-datepicker #startDate disabled="false"></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End Date</mat-label>
+        <input #endInput matInput placeholder="End Date" [matDatepicker]="endDate" (dateChange)="dateChanged('end', $event)" disabled>
+        <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+        <mat-datepicker #endDate disabled="false"></mat-datepicker>
+      </mat-form-field>
+
+      <button id="reset-button" mat-raised-button (click)="resetFilter()">Reset Filter</button>
+    </div>
+  </div>
+</div>

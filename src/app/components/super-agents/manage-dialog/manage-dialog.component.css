@@ -1,0 +1,30 @@
+
+
+dialog-form-content {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+  
+.dialog-form-content > * {
+    width: 100%;
+}
+
+.dialog-title {
+    color: #222 !important;
+}
+
+
+#save-button {
+    margin-bottom: -30px;
+    border-radius: 5px;
+    float: right;
+    height: 50px;
+    width: 120px;
+    background: #ffd436;
+}
+
+textarea {
+    height: auto;
+}

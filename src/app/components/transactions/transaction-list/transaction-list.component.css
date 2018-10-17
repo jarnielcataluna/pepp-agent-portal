@@ -1,0 +1,143 @@
+::ng-deep .mat-ink-bar {
+    background-color: var(--primary-color,yellow) !important;
+    }
+
+::ng-deep .mat-tab-links{
+    background-color: var(--primary-color,transparent) !important;
+}
+
+::ng-deep .mat-tab-label-active, ::ng-deep .mat-tab-link{
+    min-width: 0!important;
+}
+
+.example-fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+}
+
+
+.mat-header-cell {
+    font-size: 1.063rem;
+    font-weight: 300;
+    color: #3ab14b;
+}
+
+#peppTab nav a {
+    color: white;
+    background: transparent;
+}
+
+.mat-toolbar {
+    color: white;
+}
+
+.mat-table {
+    overflow: auto;
+}
+
+.mobile-label {
+    display: none;
+  }
+
+table {
+    width: 100%;
+}
+
+.card-container-right{
+    float: right;
+    padding-top: 16px;
+    padding-right: 2vw;
+}
+
+.card-container-right mat-form-field {
+    margin-left: 16px;
+}
+
+
+.card-container-left{
+    float: left;
+    padding-top: 16px;
+    padding-left: 2vw;
+}
+
+
+.mat-footer-row {
+    font-weight: bold;
+}
+  
+.mat-table-sticky {
+    border-top: 1px solid #e0e0e0;
+}
+
+.actions {
+    float: right;
+}
+
+.summary-wrapper {
+    margin: 0 15px;
+}
+
+.summary-wrapper .card {
+    margin-bottom: 0;
+}
+
+.no-trans-wrapper {
+    padding: 100px 0;
+    text-align: center;
+    width: 100%;
+}
+
+
+@media(max-width: 600px) {
+
+    .mobile-label {
+        width: 120px;
+        display: inline-block;
+            font-weight: bold;
+      }
+    
+
+    #title {
+        display: none;
+    }
+
+    .card-container-right{
+        clear: both;
+        padding: 0 2vw;
+    }
+
+    .card-container-right mat-form-field {
+        margin: 0;
+        width: 100%;
+    }
+
+    .mat-cell {
+        width:100%;
+    }
+    .mat-header-row {
+        display: none;
+      }
+    
+      .mat-row { 
+        flex-direction: column;
+        align-items: start;
+        padding: 8px 24px;
+      }
+
+      .mat-footer-row {
+        display: none;
+      }
+
+      mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-type {
+        padding-left: 0;
+    }
+
+    ::ng-deep .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+
+    .mobile-spacer {
+        flex: 1 1 auto;
+    }
+  }

@@ -1,0 +1,27 @@
+
+.info-list {
+    flex-direction: column;
+    align-items: start;
+}
+
+.label {
+    color: #3ab14b;
+    font-weight: 300;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.field{
+    padding: 0 16px;
+    text-align: left;
+}
+
+.card-category {
+    color: #222;
+}
+
+.actions {
+    float: right;
+}

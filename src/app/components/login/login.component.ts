@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatInput, MatSnackBar } from '../../../../node_modules/@angular/material';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatInput, MatSnackBar } from '@angular/material';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
-import { LoginRequestModel } from '../model/login-request.model';
-import { Router } from '../../../../node_modules/@angular/router';
+import { LoginRequestModel } from '../../models/requests/login-request.model';
+import { Router } from '@angular/router';
+import { AppComponentService } from '../../app-component.service';
+import { HttpManagerService } from '../../services/http-manager.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,9 @@ export class LoginComponent implements OnInit {
     private apiService: ApiService,
     private utils: UtilitiesService,
     private router: Router,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private auth: HttpManagerService,
+    private appService: AppComponentService
   ) { }
 
   @ViewChild('username', {
@@ -34,8 +38,10 @@ export class LoginComponent implements OnInit {
     const request = new LoginRequestModel();
     request.username = this.utils.encrypt(this.username.value);
     request.password = this.utils.encrypt(this.password.value);
+
     this.apiService.loginUser(request).then(
       (data) => {
+        this.appService.setLoggedIn(true);
         this.router.navigate(['/']);
       }
     ).catch(
@@ -46,5 +52,7 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+
 
 }

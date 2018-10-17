@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-header card-header-primary">
+    <h2 class="card-title">Super Agents</h2>
+  </div>
+  <div class="card-body">
+    <div class="no-trans-wrapper" *ngIf="dataSource.data.length == 0">
+      <h3></h3>
+    </div>
+
+    <div class=" table-container" #transactionWrapper *ngIf="dataSource.data.length > 0">
+      <table mat-table #superAgentTable [dataSource]="dataSource">
+
+        <ng-container matColumnDef="superAgentUserName">
+          <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                      <span class="mobile-spacer"></span> -->
+            {{ superAgent.user.username | decrypt }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="superAgentName">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                  <span class="mobile-spacer"></span> -->
+            {{ superAgent.name | decrypt }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="superAgentContact">
+          <mat-header-cell *matHeaderCellDef> Contact Number </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                    <span class="mobile-spacer"></span> -->
+            {{ superAgent.contact | decrypt }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="superAgentCount">
+          <mat-header-cell *matHeaderCellDef> Agents </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                      <span class="mobile-spacer"></span> -->
+            {{ superAgent.agents.length }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="superAgentWallet">
+          <mat-header-cell *matHeaderCellDef> Commission </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                        <span class="mobile-spacer"></span> -->
+            {{ superAgent.wallet.currentBalance | currency:"&#8369;" }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="superAgentLastUpdate">
+          <mat-header-cell *matHeaderCellDef> Last Updated </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                            <span class="mobile-spacer"></span> -->
+            {{ superAgent.updatedDate | date:'medium' }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let superAgent">
+            <!-- <span class="mobile-label">Name: </span>
+                              <span class="mobile-spacer"></span> -->
+
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnsToDisplay" (click)="showInfo(row)" [@listAnimation]></mat-row>
+      </table>
+
+    </div>
+  </div>
