@@ -29,6 +29,7 @@ import { AgentDeleteDialogComponent } from './components/agents/agent-delete-dia
 // tslint:disable-next-line:max-line-length
 import { CommissionBreakdownDialogComponent } from './components/transactions/commission-breakdown-dialog/commission-breakdown-dialog.component';
 import { CoreConfigComponent } from './components/core-config/core-config.component';
+import { AgentStatusDialogComponent } from './components/agents/agent-status-dialog/agent-status-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CoreConfigComponent } from './components/core-config/core-config.compon
     AgentManageDialogComponent,
     AgentDeleteDialogComponent,
     CommissionBreakdownDialogComponent,
-    CoreConfigComponent
+    CoreConfigComponent,
+    AgentStatusDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +93,8 @@ import { CoreConfigComponent } from './components/core-config/core-config.compon
     SuperAgentDeleteDialogComponent,
     AgentManageDialogComponent,
     AgentDeleteDialogComponent,
-    CommissionBreakdownDialogComponent
+    CommissionBreakdownDialogComponent,
+    AgentStatusDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

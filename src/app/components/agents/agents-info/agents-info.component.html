@@ -104,8 +104,8 @@
               <span class="label">Status: </span>
               <span class="spacer"></span>
               <span class="value">
-                <button mat-button color="primary" *ngIf="agent.user.enabled" (click)="deactivate()">Active</button>
-                <button mat-button color="warn" *ngIf="!agent.user.enabled" (click)="activate()">Inactive</button>
+                <button mat-button color="primary" *ngIf="agent.user.enabled" (click)="showUpdateStatusDialog(agent)">Active</button>
+                <button mat-button color="warn" *ngIf="!agent.user.enabled" (click)="showUpdateStatusDialog(agent)">Inactive</button>
               </span>
             </mat-list-item>
           </mat-list>

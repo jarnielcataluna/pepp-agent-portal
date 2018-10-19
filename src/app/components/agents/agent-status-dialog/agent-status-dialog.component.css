@@ -1,0 +1,31 @@
+.deactivate-button {
+    margin-bottom: -30px;
+    border-radius: 5px;
+    float: right;
+    height: 50px;
+    width: 120px;
+    background: linear-gradient(60deg, #ef5350, #e53935);
+    color: #ffffff;
+}
+
+.activate-button {
+    margin-bottom: -30px;
+    border-radius: 5px;
+    float: right;
+    height: 50px;
+    width: 120px;
+    background: linear-gradient(60deg, #66bb6a, #43a047);
+    color: #ffffff;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.dialog-container {
+    padding: 30px 10px ;
+}
+
+
+
+

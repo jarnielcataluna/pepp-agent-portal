@@ -5,6 +5,7 @@ import { serialize } from 'json-typescript-mapper';
 
 
 const API_URL = 'https://agentapi.propelrr.com';
+// const API_URL = 'http://10.0.1.33:8080';
 const API_CLIENT_ID = 'ppep_agent_core';
 const API_CLIENT_SECRET = 'c1On0vGm4jebEtM8wPpDFFTv8DCDAfHsC39FaHPKA4U=';
 const API_GENERIC_USERNAME = 'pepp_agent_app';
@@ -109,7 +110,7 @@ export class HttpManagerService {
             data.append('grant_type', 'password');
 
             this.http
-                .post(API_URL + '/api/oauth/token', data.toString(), HttpManagerService.getBasicHttpOptions())
+                .post(API_URL + '/oauth/token', data.toString(), HttpManagerService.getBasicHttpOptions())
                 .subscribe(
                     response => {
                         HttpManagerService.setToken(response['access_token']);

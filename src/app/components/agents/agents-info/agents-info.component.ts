@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AgentsService } from '../agents.service';
 import { ApiService } from '../../../services/api.service';
 import { UtilitiesService } from '../../../services/utilities.service';
-import { MatSnackBar } from '../../../../../node_modules/@angular/material';
+import { MatSnackBar, MatDialog } from '../../../../../node_modules/@angular/material';
+import { AgentStatusDialogComponent } from '../agent-status-dialog/agent-status-dialog.component';
 
 @Component({
   selector: 'app-agents-info',
@@ -28,7 +29,8 @@ export class AgentsInfoComponent implements OnInit, OnDestroy {
     private agentsService: AgentsService,
     private apiService: ApiService,
     private utils: UtilitiesService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -51,10 +53,8 @@ export class AgentsInfoComponent implements OnInit, OnDestroy {
     this.receiveTransactions = this.getTransactionsByType('RECEIVE_MONEY');
     this.topUpTransactions = this.getTransactionsByType('AGENT_TOPUP');
     this.encashTransactions = this.getTransactionsByType('AGENT_ENCASH');
-    this.roiCommissions = this.getTransactionsByType('ROI_SEND_COMMISSION');
-    this.roiCommissions.concat(this.getTransactionsByType('ROI_RECEIVE_COMMISSION'));
-    this.commissions = this.getTransactionsByType('AGENT_SEND_COMMISSION');
-    this.commissions.concat(this.getTransactionsByType('AGENT_RECEIVE_COMMISSION'));
+    this.roiCommissions = this.getTransactionsByType('ROI_RECEIVE_COMMISSION').concat(this.getTransactionsByType('ROI_SEND_COMMISSION'));
+    this.commissions = this.getTransactionsByType('AGENT_SEND_COMMISSION').concat(this.getTransactionsByType('AGENT_RECEIVE_COMMISSION'));
   }
 
   getTransactionsByType(type): Array<any> {
@@ -100,25 +100,7 @@ export class AgentsInfoComponent implements OnInit, OnDestroy {
     return total;
   }
 
-  deactivate() {
-    const username = this.utils.decrypt(this.agent.user.username);
-    this.apiService.deactivateAgent(username).then((data) => {
-      this.agentsService.updateAgent(data['id'], data);
-      this.openSnackBar('Successfully deactivated agent!');
-    }).catch((error) => {
-      this.openSnackBar('Opps! there seems to be a problem on activating this agent');
-    });
-  }
 
-  activate() {
-    const username = this.utils.decrypt(this.agent.user.username);
-    this.apiService.activateAgent(username).then((data) => {
-      this.agentsService.updateAgent(data['id'], data);
-      this.openSnackBar('Successfully activated agent!');
-    }).catch((error) => {
-      this.openSnackBar('Opps! there seems to be a problem on activating this agent');
-    });
-  }
 
   listenAgentSelected() {
     this.agentSelectedListener = this.agentsService.agentSelected.subscribe(agent => {
@@ -130,9 +112,11 @@ export class AgentsInfoComponent implements OnInit, OnDestroy {
     this.agentSelectedListener.unsubscribe();
   }
 
-  openSnackBar(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 2000,
+  showUpdateStatusDialog(data) {
+    this.dialog.open(AgentStatusDialogComponent, {
+      width: '600px',
+      panelClass: 'custom-dialog-container',
+      data: data
     });
   }
 
