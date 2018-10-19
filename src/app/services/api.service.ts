@@ -56,6 +56,10 @@ export class ApiService {
     return this.httpManager.postJsonDataWithRequestingToken('/api/agents', request);
   }
 
+  updateAgent(request: AgentRequestModel): Promise<{}> {
+    return this.httpManager.putJsonDataWithRequestingToken(`/api/agents/${request.username}`, request);
+  }
+
   getConfiguration(): Promise<{}> {
     return this.httpManager.getHttpWithRequestingToken('/api/core-config');
   }

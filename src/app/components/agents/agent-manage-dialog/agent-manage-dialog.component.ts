@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AgentsService } from '../agents.service';
 import { UtilitiesService } from '../../../services/utilities.service';
@@ -12,12 +12,14 @@ import { AgentRequestModel } from '../../../models/requests/agent-request.model'
   templateUrl: './agent-manage-dialog.component.html',
   styleUrls: ['./agent-manage-dialog.component.css']
 })
-export class AgentManageDialogComponent implements OnInit {
+export class AgentManageDialogComponent implements OnInit, OnDestroy {
 
   superAgentsSubscription;
+  selectedAgentSubscription;
   superAgents = [];
   superAgentsName = [];
   request: AgentRequestModel;
+  type = 'create';
 
   filteredOptions: Observable<string[]>;
 
@@ -35,6 +37,25 @@ export class AgentManageDialogComponent implements OnInit {
 
   ngOnInit() {
     this.getSuperAgents();
+  }
+
+  listenToSelectedAgent() {
+    this.selectedAgentSubscription = this.agentsService.agentSelected.subscribe((data) => {
+      if (data !== null) {
+        this.type = 'update';
+        this.request.firstName = this.utils.decrypt(data['firstName']);
+        this.request.firstName = this.utils.decrypt(data['firstName']);
+        this.request.lastName = this.utils.decrypt(data['lastName']);
+        this.request.simCardInfo = this.utils.decrypt(data['simCardInfo']);
+        this.request.deviceId = data['deviceId'];
+        this.request.feeCategory = data['serviceFeeCategory'];
+        this.request.username = data['userName'];
+        this.request.superAgentId = data['superAgent']['id'];
+      } else {
+        this.type = 'create';
+        this.request = new AgentRequestModel();
+      }
+    });
   }
 
   getSuperAgents() {
@@ -56,7 +77,6 @@ export class AgentManageDialogComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.superAgentsName.filter(option => this.utils.decrypt(option.name).toLowerCase().includes(filterValue));
   }
 
@@ -128,6 +148,15 @@ export class AgentManageDialogComponent implements OnInit {
     this.agentsService.closeDrawer();
   }
 
+  ngOnDestroy() {
 
+    if (this.superAgentsSubscription !== undefined) {
+      this.superAgentsSubscription.unsubscribe();
+    }
 
+    if (this.selectedAgentSubscription !== undefined) {
+      this.selectedAgentSubscription.unsubscribe();
+    }
+
+  }
 }
