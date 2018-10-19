@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-header card-header-secondary">
+    <h2 class="card-title dialog-title">{{ type }} Super Agent</h2>
+  </div>
+  <div class="card-body">
+    <div class="dialog-form-content secondary-theme">
+
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="name" name="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Contact</mat-label>
+        <input matInput [(ngModel)]="contact" name="contact">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Address</mat-label>
+        <textarea matInput [(ngModel)]="address" name="address"></textarea>
+      </mat-form-field>
+
+      <ng-container *ngIf="type === 'New'">
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Username</mat-label>
+          <input matInput [(ngModel)]="username" name="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" [(ngModel)]="password" name="password">
+        </mat-form-field>
+      </ng-container>
+    </div>
+
+    <button *ngIf="type === 'New'" id="save-button" mat-raised-button [disabled]="isSubmitting" (click)="createSuperAgent()">Create</button>
+    <button *ngIf="type !== 'New'" id="save-button" mat-raised-button [disabled]="isSubmitting" (click)="updateSuperAgent()">Update</button>
+  </div>
+
+</div>

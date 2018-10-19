@@ -1,0 +1,15 @@
+#delete-button {
+    margin-bottom: -30px;
+    border-radius: 5px;
+    float: right;
+    height: 50px;
+    width: 120px;
+    background: #e53935;
+    color: #ffffff;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+

@@ -1,0 +1,24 @@
+
+table {
+    width: 100%;
+}
+
+.mat-header-cell {
+    font-size: 1.063rem;
+    font-weight: 300;
+    color: #3ab14b;
+}
+
+mat-row:last-child{
+    border-bottom-width: 0;
+}
+
+.mat-table {
+    overflow: auto;
+}
+
+.no-trans-wrapper {
+    padding: 100px 0;
+    text-align: center;
+    width: 100%;
+}

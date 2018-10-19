@@ -1,0 +1,96 @@
+<mat-grid-list class="summary-wrapper" cols="2" rowHeight="fit" gutterSize="10px">
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="config.send !== undefined">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h2 class="card-title">Send Commission</h2>
+      </div>
+      <div class="card-body">
+        <div class="dialog-form-content secondary-theme">
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Agent</mat-label>
+            <input matInput name="sendAgent" [(ngModel)]="config.send.agent">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Super Agent</mat-label>
+            <input matInput name="sendSuperAgent" type="number" [(ngModel)]="config.send.superAgent">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>PEPP+ System</mat-label>
+            <input matInput name="peppPlusSystem" type="number" [(ngModel)]="config.send.system">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Return of Investment</mat-label>
+            <input matInput name="senRoi" type="number" [(ngModel)]="config.send.roi">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>ADB</mat-label>
+            <input matInput name="sendAdb" type="number" [(ngModel)]="config.send.adb">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Palawan Pawnshop</mat-label>
+            <input matInput name="pps" type="number" [(ngModel)]="config.send.pps">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="config.receive !== undefined">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h2 class="card-title">Receive Commission</h2>
+      </div>
+      <div class="card-body">
+        <div class="dialog-form-content secondary-theme">
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Agent</mat-label>
+            <input matInput name="receiveAgent" [(ngModel)]="config.receive.agent">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Super Agent</mat-label>
+            <input matInput name="receiveSuperAgent" type="number" [(ngModel)]="config.receive.superAgent">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>PEPP+ System</mat-label>
+            <input matInput name="receivePlusSystem" type="number" [(ngModel)]="config.receive.system">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Return of Investment</mat-label>
+            <input matInput name="receiveRoi" type="number" [(ngModel)]="config.receive.roi">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>ADB</mat-label>
+            <input matInput name="receiveAdb" type="number" [(ngModel)]="config.receive.adb">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent">
+            <mat-label>Palawan Pawnshop</mat-label>
+            <input matInput name="pps" type="number" [(ngModel)]="config.receive.pps">
+          </mat-form-field>
+
+        </div>
+      </div>
+
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div class="page-action">
+  <button mat-fab matTooltip="Save Config" [matTooltipPosition]="'above'" (click)="saveConfig()">
+    <mat-icon>save</mat-icon>
+  </button>
+</div>

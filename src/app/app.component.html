@@ -1,1 +1,17 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" [opened]="isLoggedIn">
+        <app-side-bar></app-side-bar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar *ngIf="isLoggedIn">
+            <button mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div [ngClass]="{'content' : isLoggedIn }">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

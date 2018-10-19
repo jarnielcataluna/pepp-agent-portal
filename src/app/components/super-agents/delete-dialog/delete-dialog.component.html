@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-header card-header-danger">
+    <h2 class="card-title">Remove Super Agent</h2>
+  </div>
+  <div class="card-body">
+
+    Are you sure you want to remove
+    <strong>{{ data['user']['username'] | decrypt }}</strong>?
+
+    <div class="dialog-form-content secondary-theme">
+      <button id="delete-button" mat-raised-button>Yes</button>
+    </div>
+  </div>
+</div>

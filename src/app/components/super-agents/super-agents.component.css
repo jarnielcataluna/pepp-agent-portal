@@ -1,0 +1,40 @@
+
+
+.page-action {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    z-index: 999;
+}
+
+mat-sidenav-container {
+    min-height: calc(100vh - 100px);
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-top: 20px;
+
+}
+
+mat-sidenav {
+    padding-left: 15px;
+    width: 350px;
+    background: transparent;
+}
+
+.loader {
+    position: absolute;
+    z-index: 9;
+    background: rgba(255,255,255,0.25);
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+mat-progress-bar {
+    position: absolute;
+    width: 100%;
+    z-index: 9;
+}
+
+
+
+

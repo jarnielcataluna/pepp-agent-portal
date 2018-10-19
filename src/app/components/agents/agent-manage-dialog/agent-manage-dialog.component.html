@@ -1,0 +1,63 @@
+<div class="card">
+  <div class="card-header card-header-secondary">
+    <h2 class="card-title">Create Agent
+      <div class="actions">
+        <button mat-icon-button color="basic" (click)="closeSideBar()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </h2>
+
+  </div>
+  <div class="card-body">
+    <div class="form-wrappper">
+      <div class="dialog-form-content secondary-theme">
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Super Agent</mat-label>
+          <input #superAgent matInput [formControl]="agentFormControl" [matAutocomplete]="auto" placeholder="Agent" (change)="superAgentChanged($event)">
+        </mat-form-field>
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="superAgentSelected($event)">
+          <mat-option *ngFor="let superAgent of filteredOptions | async" value="{{ superAgent['name'] | decrypt }}">{{ superAgent['name'] | decrypt }}</mat-option>
+        </mat-autocomplete>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>First Name</mat-label>
+          <input matInput name="fname" (keyup)="firstNameChanged($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Last Name</mat-label>
+          <input matInput name="lname" (keyup)="lastNameChanged($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Contact</mat-label>
+          <input matInput name="contact" (keyup)="contactChanged($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Device Id</mat-label>
+          <input matInput name="contact" (keyup)="deviceIdChanged($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Fee Category</mat-label>
+          <input matInput name="category" (keyup)="categoryChanged($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Username</mat-label>
+          <input matInput name="username" (keyup)="usernameChanged($event)">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" name="password" (keyup)="passwordChanged($event)">
+        </mat-form-field>
+
+      </div>
+    </div>
+  </div>
+</div>

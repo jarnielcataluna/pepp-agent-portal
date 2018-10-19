@@ -1,0 +1,28 @@
+<mat-progress-bar mode="indeterminate" *ngIf="fetchingData"></mat-progress-bar>
+<mat-sidenav-container>
+  <mat-sidenav-content>
+
+    <div class="loader" *ngIf="fetchingData"></div>
+    <!-- -->
+    <app-super-agent-list></app-super-agent-list>
+  </mat-sidenav-content>
+  <mat-sidenav mode="side" position="end" [opened]="isAgentSelected">
+    <app-super-agent-info (superAgentDeleteEvent)="handleSuperAgentDelete($event)" (superAgentEditEvent)="handleSuperAgentEditEvent($event)">
+    </app-super-agent-info>
+  </mat-sidenav>
+</mat-sidenav-container>
+
+<div class="page-action">
+  <ng-container *ngIf="!isAgentSelected">
+    <button mat-fab matTooltip="Add Super Agent" [matTooltipPosition]="'above'" (click)="showAddDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="isAgentSelected">
+    <button mat-fab matTooltip="Close Info" [matTooltipPosition]="'above'" (click)="closeInfo()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </ng-container>
+
+</div>

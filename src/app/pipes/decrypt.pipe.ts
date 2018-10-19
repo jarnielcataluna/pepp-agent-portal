@@ -8,10 +8,10 @@ import { UtilitiesService } from '../services/utilities.service';
 
 export class DecryptPipe implements PipeTransform {
 
-  private utils: UtilitiesService;
+  constructor(private utils: UtilitiesService) {
+  }
 
   transform(value: string): string {
-    this.utils = new UtilitiesService();
     return this.utils.decrypt(value);
   }
 

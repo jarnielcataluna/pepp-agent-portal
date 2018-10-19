@@ -1,0 +1,26 @@
+mat-sidenav-container {
+    height: 100vh;
+}
+
+mat-sidenav {
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+    width: 260px;
+}
+
+.content {
+    margin-top: 70px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.nav-icon {
+    cursor: pointer;
+}
+
+mat-toolbar {
+    position: fixed;
+    z-index: 999;
+    height: 70px;
+    background: linear-gradient(60deg, #ffd436, #e7bf2e);
+}
+

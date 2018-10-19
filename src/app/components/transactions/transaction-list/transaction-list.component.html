@@ -1,0 +1,249 @@
+<mat-grid-list class="summary-wrapper" cols="4" rowHeight="160px" gutterSize="10px" *ngIf="!isToggled && summaryData !== undefined"
+  [@slideInOut]>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="summaryData['send'] !== undefined">
+    <div class="card card-stats">
+      <div class="card-header card-header-info card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">send</i>
+        </div>
+        <div class="card-category">Send</div>
+        <h3 class="card-title">
+          {{ summaryData['send'] | currency:"&#8369;" }}
+        </h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          {{ summaryData['send_count'] }} Transactions
+        </div>
+      </div>
+
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1" [rowspan]="1" *ngIf="summaryData['receive'] !== undefined">
+    <div class="card card-stats">
+      <div class="card-header card-header-rose card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">call_received</i>
+        </div>
+        <div class="card-category">Receive</div>
+        <h3 class="card-title">
+          {{ summaryData['receive'] | currency:"&#8369;" }}
+        </h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          {{ summaryData['receive_count'] }} Transactions
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="summaryData['top_up'] !== undefined">
+    <div class="card card-stats">
+      <div class="card-header card-header-warning card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">note_add</i>
+        </div>
+        <div class="card-category">Topup</div>
+        <h3 class="card-title">
+          {{ summaryData['top_up'] | currency:"&#8369;" }}
+        </h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          {{ summaryData['top_up_count'] }} Transactions
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="1" [rowspan]="1" *ngIf="summaryData['encash'] !== undefined">
+    <div class="card card-stats">
+      <div class="card-header card-header-danger card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">money</i>
+        </div>
+        <div class="card-category">Encash</div>
+        <h3 class="card-title">
+          {{ summaryData['encash'] | currency:"&#8369;" }}
+        </h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          {{ summaryData['encash_count'] }} Transactions
+        </div>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div class="card">
+  <div class="card-header card-header-primary">
+    <div class="actions">
+      <button mat-icon-button color="basic" (click)="refreshTable()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button mat-icon-button color="basic" (click)="toggleSearch()">
+        <mat-icon>search</mat-icon>
+      </button>
+
+    </div>
+    <h2 class="card-title">Transactions</h2>
+
+    <div id="peppTab">
+      <nav mat-tab-nav-bar [backgroundColor]="'primary'">
+        <a mat-tab-link (click)="getRemittanceTransactions()" [active]="selectedType == 0">
+          SEND
+        </a>
+        <a mat-tab-link (click)="getReleasedTransactions()" [active]="selectedType == 1">
+          RECEIVE
+        </a>
+        <a mat-tab-link (click)="getTopUpTransactions()" [active]="selectedType == 2">
+          TOP UP
+        </a>
+        <a mat-tab-link (click)="getEncashTransactions()" [active]="selectedType == 3">
+          ENCASH
+        </a>
+      </nav>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="no-trans-wrapper" *ngIf="dataSource.data.length == 0">
+      <h3></h3>
+    </div>
+
+    <div class=" table-container" #transactionWrapper *ngIf="dataSource.data.length > 0">
+
+      <table mat-table #transactionTable [dataSource]="dataSource">
+
+        <ng-container matColumnDef="transactionDate">
+          <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Date: </span>
+            <span class="mobile-spacer"></span>
+            {{transaction.timestamp | date:'shortDate' }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef>Total</mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="userName">
+          <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Username: </span>
+            <span class="mobile-spacer"></span>{{transaction.agent_username | decrypt }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="transactionCode">
+          <mat-header-cell *matHeaderCellDef>Tranx Code</mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Tranx Code: </span>
+            <span class="mobile-spacer"></span>
+            {{transaction.transaction_code | decrypt }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="referenceNo">
+          <mat-header-cell *matHeaderCellDef> Reference No.</mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Reference No.: </span>
+            <span class="mobile-spacer"></span>
+            {{transaction.partner_reference_no | decrypt }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="sender">
+          <mat-header-cell *matHeaderCellDef> Sender </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+
+            <span class="mobile-label">Sender: </span>
+            <span class="mobile-spacer"></span>
+            <span *ngIf="transaction.sender_name">
+              {{ transaction.sender_name.first_name | decrypt | uppercase }} {{ transaction.sender_name.last_name | decrypt | uppercase
+              }}
+            </span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="receiver">
+          <mat-header-cell *matHeaderCellDef> Receiver </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+
+            <span class="mobile-label">Receiver: </span>
+            <span class="mobile-spacer"></span>
+            <span *ngIf="transaction.receiver_name">
+              {{ transaction.receiver_name.first_name | decrypt | uppercase }} {{ transaction.receiver_name.last_name | decrypt | uppercase
+              }}
+            </span>
+
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="principal">
+          <mat-header-cell *matHeaderCellDef> Principal </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Principal: </span>
+            <span class="mobile-spacer"></span>
+            {{transaction.amount_principal | currency:"&#8369;" }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{ getPrincipal() | currency:"&#8369;" }} </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="commission">
+          <mat-header-cell *matHeaderCellDef> Commission </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Commission: </span>
+            <span class="mobile-spacer"></span>{{transaction.commission | currency:"&#8369;" }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{ getCommission() | currency:"&#8369;" }} </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceCharge">
+          <mat-header-cell *matHeaderCellDef> Service Charge </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Service Charge: </span>
+            <span class="mobile-spacer"></span>
+            {{transaction.service_charge | currency:"&#8369;"}}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{ getServiceCharge() | currency:"&#8369;" }} </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceFee">
+          <mat-header-cell *matHeaderCellDef> Service Fee </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Service Fee: </span>
+            <span class="mobile-spacer"></span>{{transaction.service_fee | currency:"&#8369;" }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{ getServiceFee() | currency:"&#8369;" }} </mat-footer-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="total">
+          <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+          <mat-cell *matCellDef="let transaction">
+            <span class="mobile-label">Total: </span>
+            <span class="mobile-spacer"></span>
+            {{transaction.total | currency:"&#8369;"}}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> {{ getTotalCost() | currency:"&#8369;" }} </mat-footer-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let myRowData; columns: columnsToDisplay" (click)="getTransactionInfo(myRowData)" [@listAnimation]="myRowData.lenght"></mat-row>
+        <mat-footer-row *matFooterRowDef="columnsToDisplay"></mat-footer-row>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

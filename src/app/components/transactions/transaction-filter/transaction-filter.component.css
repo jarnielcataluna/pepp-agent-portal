@@ -1,0 +1,30 @@
+
+
+.actions {
+    float: right;
+}
+
+.filter-form-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.filter-form-content > * {
+    width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+}
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 5px;
+}
+
+#reset-button {
+    margin-bottom: -30px;
+    border-radius: 5px;
+    float: right;
+    height: 40px;
+    background: #e53935;
+    color: #fff
+}

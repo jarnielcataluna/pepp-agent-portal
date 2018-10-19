@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-header card-header-danger" [ngClass]="{'card-header-danger' : agent['user']['enabled'], 'card-header-success' : !agent['user']['enabled']}">
+    <h2 class="card-title" *ngIf="agent['user']['enabled']">Deactivate Agent</h2>
+    <h2 class="card-title" *ngIf="!agent['user']['enabled']">Activate Agent</h2>
+  </div>
+  <div class="card-body">
+
+    <div class="dialog-container">
+      Are you sure you want to
+      <strong *ngIf="agent['user']['enabled']">Deactivate</strong>
+      <strong *ngIf="!agent['user']['enabled']">Activate</strong>
+      this agent (
+      <strong>{{ agent['user']['username'] | decrypt }}</strong> )?
+    </div>
+    <div class="dialog-form-content secondary-theme">
+      <button (click)="onConfirmAction()" [ngClass]="{'deactivate-button' : agent['user']['enabled'], 'activate-button' : !agent['user']['enabled']}"
+        mat-raised-button>Yes</button>
+    </div>
+  </div>
+</div>

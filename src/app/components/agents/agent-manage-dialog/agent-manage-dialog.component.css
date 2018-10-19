@@ -1,0 +1,38 @@
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 5px;
+}
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 10px;
+}
+
+.actions {
+    float:right;
+}
+
+.dialog-form-content {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.dialog-form-content > * {
+    width: 100%;
+}
+
+.card-title {
+    color: #222 !important;
+}
+
+#save-button {
+    margin-bottom: -30px;
+    border-radius: 5px;
+    float: right;
+    height: 50px;
+    width: 120px;
+    background: #ffd436;
+}
+
+textarea {
+    height: auto;
+}
+

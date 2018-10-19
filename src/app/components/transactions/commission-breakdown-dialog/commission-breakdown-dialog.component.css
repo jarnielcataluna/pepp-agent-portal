@@ -1,0 +1,19 @@
+.card-body {
+    padding: 20px;
+}
+
+
+table {
+    width: 100%;
+}
+
+
+.mat-header-cell {
+    font-size: 1.063rem;
+    font-weight: 300;
+    color: #3ab14b;
+}
+
+mat-row:last-child{
+    border-bottom-width: 0;
+}

@@ -2,7 +2,7 @@
 import { JsonProperty } from 'json-typescript-mapper';
 export class LoginRequestModel {
     @JsonProperty('username')
-    private _username: number;
+    private _username: string;
 
     @JsonProperty('password')
     private _password: string;

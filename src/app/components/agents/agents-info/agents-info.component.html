@@ -1,0 +1,187 @@
+<ng-container *ngIf="agent !== undefined">
+  <mat-grid-list class="summary-wrapper" cols="6" rowHeight="fit" gutterSize="10px">
+
+    <mat-grid-tile [colspan]="2" [rowspan]="3">
+      <div class="card card-stats">
+        <div class="card-header card-header-rose card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">account_balance_wallet</i>
+          </div>
+          <div class="card-category">Wallet Balance</div>
+          <h3 class="card-title">{{ wallet.currentBalance | currency:"&#8369;" }}</h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">access_time</i> {{ wallet.currentUpdated | date:'medium' }}
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="2" [rowspan]="3">
+      <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">compare_arrows</i>
+          </div>
+          <div class="card-category">Total Transactions</div>
+          <h3 class="card-title">
+            {{ getTotals() | currency:"&#8369;" }}
+          </h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            {{ getCount() }} Transactions
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+
+
+    <mat-grid-tile [colspan]="2" [rowspan]="3">
+      <div class="card card-stats">
+        <div class="card-header card-header-warning card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">money</i>
+          </div>
+          <div class="card-category">Total Commission</div>
+          <h3 class="card-title"> {{ getTotal(commissions) | currency:"&#8369;" }}</h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            {{ commissions.length }} Transactions
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="3" [rowspan]="10">
+      <div class="card card-stats">
+        <div class="card-header card-header-success">
+          Agent Information
+        </div>
+        <div class="card-body">
+          <mat-list>
+            <mat-list-item class="info-list">
+              <span class="label">Username: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ agent.user.username | decrypt }}</span>
+            </mat-list-item>
+            <mat-list-item class="info-list">
+              <span class="label">First Name: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ agent.firstName | decrypt }}</span>
+            </mat-list-item>
+            <mat-list-item class="info-list">
+              <span class="label">Last Name: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ agent.lastName | decrypt }}</span>
+            </mat-list-item>
+            <mat-list-item class="info-list">
+              <span class="label">Contact: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ agent.simCardInfo | decrypt}}</span>
+            </mat-list-item>
+            <mat-list-item class="info-list">
+              <span class="label">Device Id: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ agent.deviceId }}</span>
+            </mat-list-item>
+            <mat-list-item class="info-list">
+              <span class="label">Average Wallet Balance: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ getAverageWalletBalance() | currency:"&#8369;" }}</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Return of Investment: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ getTotal(roiCommissions) | currency:"&#8369;" }} / {{ agent.roi | currency:"&#8369;" }}</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Status: </span>
+              <span class="spacer"></span>
+              <span class="value">
+                <button mat-button color="primary" *ngIf="agent.user.enabled" (click)="showUpdateStatusDialog(agent)">Active</button>
+                <button mat-button color="warn" *ngIf="!agent.user.enabled" (click)="showUpdateStatusDialog(agent)">Inactive</button>
+              </span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <!-- <i class="material-icons">access_time</i> {{ agentData.updatedDate | date:'medium' }} -->
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="3" [rowspan]="10">
+      <div class="card card-stats">
+        <div class="card-header card-header-secondary">
+          Transactions Information
+        </div>
+        <div class="card-body">
+          <mat-list>
+            <mat-list-item class="info-list">
+              <span class="label">Overall Send: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ getTotal(sendTransactions) | currency:"&#8369;" }}</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Total Send: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ sendTransactions.length }} transactions</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Overall Receive: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ getTotal(receiveTransactions) | currency:"&#8369;" }}</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Total Receive: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ receiveTransactions.length }} transactions</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Overall Encash: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ getTotal(encashTransactions) | currency:"&#8369;" }}</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Total Encash:</span>
+              <span class="spacer"></span>
+              <span class="value">{{ encashTransactions.length }} transactions</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Overall Top Up: </span>
+              <span class="spacer"></span>
+              <span class="value">{{ getTotal(topUpTransactions) | currency:"&#8369;" }}</span>
+            </mat-list-item>
+
+            <mat-list-item class="info-list">
+              <span class="label">Total Top Up:</span>
+              <span class="spacer"></span>
+              <span class="value">{{ topUpTransactions.length }} transactions</span>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <!-- <i class="material-icons">access_time</i> {{ agentData.updatedDate | date:'medium' }} -->
+          </div>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+
+  </mat-grid-list>
+</ng-container>

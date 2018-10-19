@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, Inject, ViewEncapsulation, ElementRef } f
 import { MatPaginator, MatTableDataSource, MatDatepickerInputEvent, MatSnackBar, MatAutocompleteSelectedEvent, MatInput, MatDialog, MatTable } from '@angular/material';
 import { ApiService } from '../../services/api.service';
 import { UtilitiesService } from '../../services/utilities.service';
-import { TransactionRequestModel } from '../model/transaction-request.model';
+import { TransactionRequestModel } from '../../models/requests/transaction-request.model';
 import { HttpManagerService } from '../../services/http-manager.service';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
@@ -11,18 +11,6 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
-export class Transaction {
-  date: number;
-  username: string;
-  type: number;
-  txnCode: string;
-  sender: string;
-  receiver: string;
-  principal: number;
-  commission: number;
-  serviceCharge: number;
-  total: number;
-}
 
 @Component({
   selector: 'app-dashboard',
@@ -92,7 +80,8 @@ export class DashboardComponent implements OnInit {
 
   getRemittanceTransactions() {
     this.columnsToDisplay = [
-      'transactionDate', 'userName', 'transactionCode', 'sender', 'receiver', 'principal', 'commission', 'serviceCharge', 'total'
+      // tslint:disable-next-line:max-line-length
+      'transactionDate', 'userName', 'referenceNo', 'transactionCode', 'sender', 'receiver', 'principal', 'commission', 'serviceCharge', 'total'
     ];
     this.title = 'Remittances';
     this.request.type = 1;
@@ -102,7 +91,7 @@ export class DashboardComponent implements OnInit {
   getReleasedTransactions() {
     this.title = 'Acknowledgement';
     this.columnsToDisplay = [
-      'transactionDate', 'userName', 'transactionCode', 'receiver', 'principal', 'total'
+      'transactionDate', 'userName', 'referenceNo', 'transactionCode', 'receiver', 'principal', 'total'
     ];
     this.request.type = 2;
     this.getTransactions();
@@ -207,7 +196,7 @@ export class DashboardComponent implements OnInit {
       }).then(() => {
 
         for (const d of this.agents) {
-          this.usernames.push(this.utils.decrypt(d['username']));
+          this.usernames.push(this.utils.decrypt(d['user']['username']));
         }
 
         this.filteredOptions = this.agentFormControl.valueChanges
@@ -271,7 +260,6 @@ export class DashboardComponent implements OnInit {
 
     for (const transaction of this.transactionData) {
       const temp = {};
-      console.log(transaction);
       const date = new Date(transaction['timestamp']);
       temp['DATE'] = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getUTCFullYear();
       temp['TIME'] = (date.getHours()) + ':' + date.getMinutes() + ':' + date.getSeconds();

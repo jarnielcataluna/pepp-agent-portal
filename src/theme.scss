@@ -7,5 +7,17 @@ $my-app-warn:    mat-palette($mat-deep-orange);
 
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
+
 @include angular-material-theme($my-app-theme);
+
+
+$secondary-app-primary: mat-palette($mat-teal);
+$secondary-app-accent:  mat-palette($mat-gray);
+$secondary-app-warn:    mat-palette($mat-blue);
+$secondary-theme:       mat-light-theme($secondary-app-primary, $secondary-app-accent, $secondary-app-warn);
+
+.secondary-theme {
+    @include angular-material-theme($secondary-theme);
+}
+
 
