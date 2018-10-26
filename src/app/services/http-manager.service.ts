@@ -110,7 +110,7 @@ export class HttpManagerService {
             data.append('grant_type', 'password');
 
             this.http
-                .post(API_URL + '/oauth/token', data.toString(), HttpManagerService.getBasicHttpOptions())
+                .post(API_URL + '/api/oauth/token', data.toString(), HttpManagerService.getBasicHttpOptions())
                 .subscribe(
                     response => {
                         HttpManagerService.setToken(response['access_token']);
